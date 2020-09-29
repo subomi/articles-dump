@@ -54,7 +54,7 @@ The guide below tells you exactly what you need to do for each step along the wa
    2. Say something like: "Hey, I'm thinking about proposing an article on marshmallows. Would you be interested in that?"
    3. Save the issue, but don't touch assignments or labels.
 
-   We will get back to you asap.
+   We will get back to you ASAP.
 
 2. ### Propose an article
 
