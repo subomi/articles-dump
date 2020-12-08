@@ -4,12 +4,21 @@
 - name: proposal
   color: '5319e7'
   description: Article Proposal
+- name: in-progress
+  color: '12ede9'
+  description: Work In Progress
+- name: attention
+  color: 'e0d216'
+  description: Needs attention
 - name: question
   color: d876e3
   description: Ask the editors something
 - name: complete
   color: c5def5
   description: An item that is complete
+- name: published
+  color: f4ca81
+  description: Article has been published
 - name: stale
   color: d93f0b
   description: No recent updates have been made
