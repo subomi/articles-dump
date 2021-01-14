@@ -1,9 +1,10 @@
 ---
 name: Article Proposal
 about: When you want to propose an article, use this template
-title: ""
-labels: proposal
-assignees: ""
+title: ''
+labels: proposal, article
+assignees: ''
+
 ---
 
 > Please fill this out as best you can. It's for our internal use only. Your writing doesn't need to be perfect.

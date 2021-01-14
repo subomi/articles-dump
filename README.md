@@ -46,6 +46,13 @@ Every article we commission follows the same process of ideation, proposal, writ
 
 The guide below tells you exactly what you need to do for each step along the way.
 
+0. ### Think of a topic
+
+   It should be about some aspect of Ruby, PHP or JS development. We like to use the formula `[big topic] for [specific language or framework]`. The topic should be something you could imagine a developer googling as part of their day-to-day work.
+
+   For ideas, look at our [Topic Wishlist](https://www.notion.so/honeybadger/23ddc459eaff4a239b748d801b29aa52?v=42e3a14e2aee46dab698f59537f51fbb)
+
+
 1. ### Ask about the topic
 
    Before developing an idea, please ask us for feedback on the topic. This will save you a lot of time if the topic doesn't work for us, or we already have it covered.
@@ -104,8 +111,8 @@ The guide below tells you exactly what you need to do for each step along the wa
    Once you are happy with the edits, please merge and close the PR.
 
 8. ### Payment
-   We typically pay authors within 1-2 weeks of edits being approved
-9. ### Publication
+   We typically pay authors within 1-2 weeks of edits being approved. The only method of payment we use is PayPal.
+9.  ### Publication
    We typically publish 2-3 months after an article is completed.
 
 ## The directory structure
