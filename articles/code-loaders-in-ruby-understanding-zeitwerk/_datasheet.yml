@@ -1,0 +1,49 @@
+# Blog Post Datasheet
+# This should be filled out for every new blog post that we will be promoting.
+
+# This will be the actual title published in the blog.
+title: >-
+  Code Loaders in Ruby: Understanding Zeitwerk
+
+# Path of post. Will be like https://www.honeybadger.io/blog/mypath
+path: ruby-code-loader-zeitwerk
+
+# The author's slug. Usually it's the firstname and lastname concatinated,
+# all lowercase. i.e. starrhorne
+author: olasubomioluwalana
+
+tags: ruby
+
+publish-on: 02-22-2021
+
+marketing-notes:
+  # Describe the article in terms a smart non-programmer would understand
+  eli5: >-
+    The funny thing about apps is that they have a lot of code in them. The code lives in files: hundreds or thousands of them. Traditionally, if you want to use the code in a file, you have to tell Ruby to load it for you. This can slow you down if you don't remember which file you need. Code loaders automate this process. They allow the programmer to focus on the code. They watch what the programmer writes, and then they pull in the necessary files.
+
+
+  # Who is this article written for?
+  who: Intermediate and advanced rails developers
+
+  # What does it do for them?
+  what: >-
+    It teaches them all about code loaders :)
+
+
+  # Why is that important?
+  why: >-
+    Code loaders are a central part of the magic behind rails. They're one reason everything just kind of magically works. By learning about this stuff you can make your own magic.
+
+
+  # Anything else marketing should know?
+  msc: >-
+    TODO
+
+# This is the only text a reader is guaranteed to see. It is marketing text.
+# Use it to tell readers what this article is and why they should read it.
+# Keep it under 350 chars or so. It is displayed on the blog index page and
+# at the top of individual articles.
+short-description: >-
+  What makes Rails magical? It just might be its code loader. Put a few files in the right places, and - presto! - you have a web app. When you use a class, Rails handles the include so you can stay focused on your code. But this magic isn't just for Rails!  You can add thread-safe code loading to your own apps via the Zeitwerk gem. In this article, Olasubomi introduces us to Zeitwerk and shows us how to integrate it with our own projects.
+
+
