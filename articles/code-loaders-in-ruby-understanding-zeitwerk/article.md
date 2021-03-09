@@ -87,7 +87,7 @@ The above code instantiates a loader instance and calls `setup`. After the call 
   module Bar
   end
   loader = Zeitwerk::Loader.new
-  loader.push_dir("#{__dir__}"/bar, namespace: Bar)
+  loader.push_dir("#{__dir__}/src", namespace: Bar)
   loader.setup
 
   // src/foo.rb
