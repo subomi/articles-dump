@@ -4,7 +4,9 @@
 
 Serverless Functions are a new programming paradigm of developing and deploying cloud services. In a serverless world, we abstract the provisioning, maintenance and scaling of our backend services to the cloud provider. This substantially improves developer productivity by allowing developers focus clearly on solving their specific problem. While there are many advantages and disadvantages of building serverless functions, one of things to consider in building them is langauge support. Recently, Google announced the support of Ruby 2.7 for Google Cloud Functions, and in this article, I'll be focusing on building, testing & deploying a serverless function in Ruby on Google Cloud Functions vs. the pros & cons of serverless functions.
 
-### Our Serverless Function Spec
+### Building a Serverless OTP System
+
+OTP stands for "one time password." They're the little numeric codes that your bank might text you to verify your identity. 
 
 In this article, I'll be building an OTP Function that handles 3 core responsibilities: 
 
