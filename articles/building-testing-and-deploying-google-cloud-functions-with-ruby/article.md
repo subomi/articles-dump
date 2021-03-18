@@ -221,17 +221,17 @@ To write functions in GCF, we'll rely on the `Functions Framework` provided by t
 
 This is a lot of code, so we’ll break it down: 
 
-    - `Functions_Framework.on_startup` is a block of code that runs per Ruby instance before functions begin processing requests. It is ideal to run any form of initialization before our functions are called. In this case, I'm using it to create and share a connection pool to our Redis server:
+- `Functions_Framework.on_startup` is a block of code that runs per Ruby instance before functions begin processing requests. It is ideal to run any form of initialization before our functions are called. In this case, I'm using it to create and share a connection pool to our Redis server:
 
-        ```ruby
-        set_global :redis_client, ConnectionPool.new(size: 5, timeout: 5) { Redis.new }
-        ```
+     ```ruby
+     set_global :redis_client, ConnectionPool.new(size: 5, timeout: 5) { Redis.new }
+     ```
 
-        This enables us share a pool of Redis connection objects across multiple concurrent function invocations without fear. Multiple startups can be defined. They'll run in the order that they are defined. It is also important to note that the `Functions Framework` does not provide any special hook to run after function completion.
+    This enables us share a pool of Redis connection objects across multiple concurrent function invocations without fear. Multiple startups can be defined. They'll run in the order that they are defined. It is also important to note that the `Functions Framework` does not provide any special hook to run after function completion.
 
-    - `Functions_Framework.http 'otp' do |request|` handles the request and response processing of our functions. This function supports three different route patterns. It is possible to define other types of functions (e.g., `Functions_Framework.cloud_event 'otp' do |event|`) that handle events from other Google services. It is also possible to define multiple functions in the same file but deployed independently.
-    - In `store = Store.new(global(:redis_client))`, the `global` method is used to retrieve any object stored in the global shared state.  As it is used above, we retrieve the Redis client from the Connection pool defined in the global setup in our `startup` block.
-    - `Response` and `Models::OtpResponse` handles response serialization with `active_model_serializers` to give properly formatted JSON responses.
+- `Functions_Framework.http 'otp' do |request|` handles the request and response processing of our functions. This function supports three different route patterns. It is possible to define other types of functions (e.g., `Functions_Framework.cloud_event 'otp' do |event|`) that handle events from other Google services. It is also possible to define multiple functions in the same file but deployed independently.
+- In `store = Store.new(global(:redis_client))`, the `global` method is used to retrieve any object stored in the global shared state.  As it is used above, we retrieve the Redis client from the Connection pool defined in the global setup in our `startup` block.
+- `Response` and `Models::OtpResponse` handles response serialization with `active_model_serializers` to give properly formatted JSON responses.
 
 ### Testing our Function Locally
 
