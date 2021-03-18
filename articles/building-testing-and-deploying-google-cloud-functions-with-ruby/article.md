@@ -1,14 +1,14 @@
-# Building, Testing and Deploying Google Cloud Functions with Ruby
+# Building, Testing, and Deploying Google Cloud Functions with Ruby
 
 ### What are Serverless Functions?
 
-Serverless Functions are a new programming paradigm of developing and deploying cloud services. In a serverless world, we abstract the provisioning, maintenance and scaling of our backend services to the cloud provider. This substantially improves developer productivity by allowing developers focus clearly on solving their specific problem. While there are many advantages and disadvantages of building serverless functions, one of things to consider in building them is langauge support. Recently, Google announced the support of Ruby 2.7 for Google Cloud Functions, and in this article, I'll be focusing on building, testing & deploying a serverless function in Ruby on Google Cloud Functions vs. the pros & cons of serverless functions.
+Serverless Functions are a new programming paradigm of developing and deploying cloud services. In a serverless world, we abstract the provisioning, maintenance, and scaling of our backend services to the cloud provider. This substantially improves developer productivity by allowing developers focus on solving a specific problem. While there are many advantages and disadvantages of building serverless functions, one thing to consider in building them is language support. Recently, Google announced the support of Ruby 2.7 for Google Cloud Functions, and in this article, I'll focus on building, testing, and deploying a serverless function in Ruby on Google Cloud Functions and the pros and cons of serverless functions.
 
 ### Building a Serverless OTP System
 
-OTP stands for "one time password." They're the little numeric codes that your bank might text you to verify your identity. 
+One-time passwords (OTPs) are short numeric codes used for authentication purposes, such as when your bank sends an OPT via text to verify your identity. 
 
-In this article, I'll be building an OTP Function that handles 3 core responsibilities: 
+In this article, we'll build an OTP function that handles three core responsibilities: 
 
 - `POST /otp`: Generates and sends an OTP message to the provided `phone_number`.
 
@@ -67,21 +67,21 @@ In this article, I'll be building an OTP Function that handles 3 core responsibi
     }
     ```
 
-For the sake of simplicity, our Cloud Function will be backed by a Cloud MemoryStore (Redis or Memcache on GCP) rather than a full SQL or NoSQL Database. This also, we enable us learn about shared state in a stateless environment like this.
+For the sake of simplicity, our cloud function will be backed by a Cloud MemoryStore (Redis or Memcache on GCP) rather than a full SQL or NoSQL Database. This will also enable us learn about shared states in a stateless environment.
 
 ### Writing a Google Cloud Function with Ruby
 
-To write functions in GCF, we'd rely on the `Functions Framework` provided by the Google Cloud team for building GCF functions (more on this later.).
+To write functions in GCF, we'll rely on the `Functions Framework` provided by the Google Cloud team for building GCF functions (more on this later).
 
-1. Create App directory and enter the directory
+1. Create App directory and enter the directory.
 
     ```bash
     mkdir otp-cloud-function && cd otp-cloud-function
     ```
 
-2. Create your Gemfile and Install
+2. Create your Gemfile and install.
 
-    Like most standard ruby applications we'll be using `bundler` to manage our function's dependencies
+    Like most standard Ruby applications, we'll use `bundler` to manage our function's dependencies
 
     ```ruby
     source "https://rubygems.org"
@@ -116,7 +116,7 @@ To write functions in GCF, we'd rely on the `Functions Framework` provided by th
     bundle install
     ```
 
-3. Create your functions source file - `app.rb`
+3. Create your functions source file—`app.rb`.
 
     Generally, different hosting environments allow you specify a different file where your functions are written. Google Cloud Functions, however, requires it to be `app.rb` in the root of your project directory. Now, we're ready to write our function. 
 
@@ -124,7 +124,7 @@ To write functions in GCF, we'd rely on the `Functions Framework` provided by th
     touch app.rb
     ```
 
-4. Write OTP function
+4. Write the OTP function.
 
     ```ruby
     # Cloud Functions Entrypoint
@@ -219,23 +219,23 @@ To write functions in GCF, we'd rely on the `Functions Framework` provided by th
     end
     ```
 
-    While the above is a lot, let's try to break it down 
+This is a lot of code, so we’ll break it down: 
 
-    - `Functions_Framework.on_startup`: is a block of code that runs per Ruby instance before functions begin processing requests. This is ideal to run any form of initialisation before our functions are called. In this case, I'm using it to create and share a connection pool to our Redis server -
+    - `Functions_Framework.on_startup` is a block of code that runs per Ruby instance before functions begin processing requests. It is ideal to run any form of initialization before our functions are called. In this case, I'm using it to create and share a connection pool to our Redis server:
 
         ```ruby
         set_global :redis_client, ConnectionPool.new(size: 5, timeout: 5) { Redis.new }
         ```
 
-        This enables us share a pool of Redis connection objects across multiple concurrent function invocations without fear. Multiple startups can be defined. They'll be run in order as they are defined. It is important also to note that the `Functions Framework` does not provide any special hook to run after function completion.
+        This enables us share a pool of Redis connection objects across multiple concurrent function invocations without fear. Multiple startups can be defined. They'll run in the order that they are defined. It is also important to note that the `Functions Framework` does not provide any special hook to run after function completion.
 
-    - `Functions_Framework.http 'otp' do |request|`:  Handles the request and response processing of our functions. This function supports 3 different route patterns. It is possible to define other types of functions e.g. `Functions_Framework.cloud_event 'otp' do |event|` that handles events from other Google services. It is possible as well, to define multiple functions in the same file, but deployed independently.
-    - `store = Store.new(global(:redis_client))`: The  `global` method is used to retrieve any object stored in the global shared state.  As it is used above, we retrieve the Redis client from the Connection pool defined in the global setup in our `startup` block.
-    - `Response` and `Models::OtpResponse`: This components handles response serialisation with `active_model_serializers` to give properly formatted JSON responses.
+    - `Functions_Framework.http 'otp' do |request|` handles the request and response processing of our functions. This function supports three different route patterns. It is possible to define other types of functions (e.g., `Functions_Framework.cloud_event 'otp' do |event|`) that handle events from other Google services. It is also possible to define multiple functions in the same file but deployed independently.
+    - In `store = Store.new(global(:redis_client))`, the `global` method is used to retrieve any object stored in the global shared state.  As it is used above, we retrieve the Redis client from the Connection pool defined in the global setup in our `startup` block.
+    - `Response` and `Models::OtpResponse` handles response serialization with `active_model_serializers` to give properly formatted JSON responses.
 
 ### Testing our Function Locally
 
-The `Functions Framework` library enables us to locally test our functions with ease before deploying them to the cloud. To test locally, we run
+The `Functions Framework` library enables us to easily test our functions locally before deploying them to the cloud. To test locally, we run
 
 ```bash
 bundle exec functions-framework-ruby --target=otp --port=3000
@@ -245,7 +245,7 @@ bundle exec functions-framework-ruby --target=otp --port=3000
 
 - Automated Tests for our GCF Function
 
-    While manual testing is great. Automated tests and self testing software is our holy grail in testing, the `Functions Framework` provides helper methods for both `Minitest` and `RSpec` to help us test our functions both for the `http` and `cloudevents` handlers. An example of a test is below:
+    While manual testing is great, automated tests and self-testing software is the holy grail in testing. The `Functions Framework` provides helper methods for both `Minitest` and `RSpec` to help test our functions for both `http` and `cloudevents` handlers. Here is an example of a test:
 
     ```ruby
     require './spec/spec_helper.rb'
@@ -276,13 +276,13 @@ bundle exec functions-framework-ruby --target=otp --port=3000
     end
     ```
 
-### Deploying our Function
+### Deploying Our Function
 
-First, we need to deploy a Redis server using `Google Cloud Memorystore`, which our function is dependent on. I won't go into further details on how to deploy a Redis server to the GCP as that is outside the scope of this article. 
+First, we need to deploy a Redis server using `Google Cloud Memorystore`, on which our function is dependent. I won't go into further detail here on how to deploy a Redis server to the GCP, as it is outside the scope of this article. 
 
-There are multiple ways of deploying our function to the Google Cloud Function's environment - Deploying from your machine, deploying from the GCP Console, deploying from our Code Repositories. Modern software engineering encourages CI/CD processes for most of our development and for the purpose of this article I'll be focusing on deploying our Cloud Function from Github with Github Actions using [deploy-cloud-functions](https://github.com/google-github-actions/deploy-cloud-functions). 
+There are multiple ways to deploy our function to the Google Cloud Function's environment: deploying from your machine, deploying from the GCP console, and deploying from our code repositories. Modern software engineering encourages CI/CD processes for most of our development, and for the purpose of this article, I'll focus on deploying our Cloud Function from Github with Github Actions using [deploy-cloud-functions](https://github.com/google-github-actions/deploy-cloud-functions). 
 
-1. Let's setup our Deployment File (.github/workflows/deploy.yml)
+1. Let's set up our deployment file (.github/workflows/deploy.yml).
 
     ```json
     name: Deployment
@@ -305,25 +305,25 @@ There are multiple ways of deploying our function to the Google Cloud Function's
               env_vars: "TWILIO_ACCOUNT_SID=${{ secrets.TWILIO_ACCOUNT_SID }},TWILIO_AUTH_TOKEN=${{ secrets.TWILIO_AUTH_TOKEN }},TWILIO_PHONE_NUMBER=${{ secrets.TWILIO_PHONE_NUMBER }},REDIS_URL=${{ secrets.REDIS_URL }}"
     ```
 
-2. Environment Variables: From the above code, the last line allows us specify environment variables that will be available to our function in the Google Cloud environment. Also note that for security reasons, we're not exposing this variables in our codebase rather, we're utilising Github actions secrets, to keep this information private. To check if our tokens have been properly deployed, check your cloud function in the Google Console, like below: 
+2. Environment Variables: In the above code, the last line allows us specify environment variables that will be available to our function in the Google Cloud environment. Note that for security reasons, we're not exposing these variables in our codebase; instead, we're utilizing Github actions secrets to keep this information private. To check whether our tokens have been properly deployed, check your cloud function in the Google Console, as shown below: 
 
     ![Environment Variables](environment-variables.png)
 
-3. Create a `Service Account` with a `Cloud Functions Admin` and `Service Account User` role.
+3. Create a `Service Account` with `Cloud Functions Admin` and `Service Account User` roles.
 
-    A service account is an account used for machine to machine IAM. This means when a system (running on the Google Cloud or not.) talks to another system on the Google Cloud, a service account is needed to help us identify who is requesting access to our Google resource. The roles `Cloud Functions Admin` and `Service Account User` enables to know if the user is authorised to access the resource. In this scenario, a Github Action runner is communicating with Google Cloud authenticating as a service account with the necessary permissions to deploy our function.
+    A service account is used for machine-to-machine IAM. Thus, when a system, regardless of whether it’s running on the Google Cloud, talks to another system on the Google Cloud, a service account is needed to help identify who is requesting access to our Google resource. The roles `Cloud Functions Admin` and `Service Account User` enable us to determine whether the user is authorized to access the resource. In this scenario, a Github Action runner communicates with Google Cloud authenticating as a service account with the necessary permissions to deploy our function.
 
     ![Create Service Account](create-service-account.png)
 
     ![Assign Roles](assign-roles.png)
 
-4. Create a Service Account Key, download JSON and add it to GitHub Secrets.
+4. Create a Service Account Key, download JSON, and add it to GitHub Secrets.
 
     ![Generate key](generate-key.png)
 
     ![Github Secrets](github-secrets.png)
 
-Voila 🎉 Our Cloud Function has been deployed successfully. 
+Voila! 🎉 Our Cloud Function has been deployed successfully. 
 
 ### Cloud Functions Limits vs. AWS Limits
 
@@ -333,11 +333,11 @@ Below is a detailed comparison of two of the biggest Serverless function provide
 
 ### Functions Framework Contract vs. Serverless Framework
 
-In this article, we've focused clearly on building cloud functions for Google Cloud Functions. In this segment, I want to compare building with the Functions Framework vs. Serverless Framework.
+In this article, we've focused on building cloud functions for Google Cloud Functions. In this segment, I want to compare building with the Functions Framework vs. Serverless Framework.
 
-- The `Serverless Framework` is based off the `serverless.yml` While Functions Framework is based off the `Functions Framework Contract` used to deploy serverless functions across Google Cloud Infrastructure.
-- With the `Serverless Framework` there are only few examples and it isn't quite clear how to build & deploy serverless functions with Ruby to the different Google serverless environments (Cloud Functions, Cloud Run & Knative environments) with the `Functions Framework Contract` function it is straightforward to build with Ruby across these different Google products.
+- The `Serverless Framework` is based on `serverless.yml`, while Functions Framework is based on the `Functions Framework Contract`, which is used to deploy serverless functions across the Google Cloud Infrastructure.
+- With the `Serverless Framework`, there are only few examples, and it isn't quite clear how to build and deploy serverless functions with Ruby to the different Google serverless environments (Cloud Functions, Cloud Run, and Knative environments). With the `Functions Framework Contract` function, building with Ruby across these different Google products is straightforward.
     - Following from the previous point, the `Functions Framework Contract` makes it very easy to switch the backing language behind your function without necessarily changing much in your deployment process.
-- As of this writing, `Functions Framework` only supports interoperability across Google Cloud Serverless Environments & knative environments. `Serverless Framework` on the other hand supports multiple platforms, across multiple providers.
+- As of this writing, `Functions Framework` only supports interoperability across Google Cloud Serverless Environments and Knative environments. `Serverless Framework`, however, supports multiple platforms across multiple providers.
 
-For reference, the full code is available [here](https://github.com/Subomi/otp-cloud-function)
+For reference, the full code is available [here](https://github.com/Subomi/otp-cloud-function).
