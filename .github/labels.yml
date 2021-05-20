@@ -22,3 +22,6 @@
 - name: stale
   color: d93f0b
   description: No recent updates have been made
+- name: briefing
+  color: 215F31
+  description: A briefing
