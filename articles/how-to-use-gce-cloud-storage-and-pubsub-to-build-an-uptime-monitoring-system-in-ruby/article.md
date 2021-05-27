@@ -453,10 +453,11 @@ If you made it this far, you deserve a cookie 🍪 . While I think this a first 
 - Potentially, from the previous point we can abstract this into an app that integrates to popular cloud providers to achieve same functionality - hence making it cloud-agnostic. P.S: Popular cloud providers (GCP, AWS, & Azure) provide same functionalities across.
 - In the next article, we'll build upon this solution to provide - rollbacks with Cloud Storage object versioning this will enable us recover from updating the configuration with wrong updates.
 
+* Deploying with Docker simply solves the packaging problem for us, but as perhaps already know there are various ways to package services, I choose docker in this article for the sake of simplicity.
+
 ## Glossary
 
 - **Prometheus** is an open-source systems monitoring and alerting toolkit. It includes a server that scrapes and stores time series data, client libraries for instrumenting application code, an alertmanager to handle alerts.
 - **Grafana** is a visualisation system that allows you to query, visualise and alert on and understand your metrics regardless of where they are stored.
 - **Blackbox Exporter** is an open-source tool built by the prometheus team to probe endpoints over HTTP, HTTPS, DNS, TCP and ICMP.
 
-* Deploying with Docker simply solves the packaging problem for us, but as perhaps already know there are various ways to package services, I choose docker in this article for the sake of simplicity.
