@@ -1,0 +1,48 @@
+# Blog Post Datasheet
+# This should be filled out for every new blog post that we will be promoting.
+
+# This will be the actual title published in the blog.
+title: >-
+  Understanding How Rbenv, RubyGems And Bundler Work Together
+
+# Path of post. Will be like https://www.honeybadger.io/blog/mypath
+path: rbenv-rubygems-bundler-path
+
+# The author's slug. Usually it's the firstname and lastname concatinated,
+# all lowercase. i.e. starrhorne
+author: olasubomioluwalana
+
+tags: ruby
+
+# mm-dd-yyyy
+publish-on: 07-05-2021
+
+marketing-notes:
+  # Describe the article in terms a smart non-programmer would understand
+  eli5: >-
+    Apps are made of lots of little bits of code. These come from all over. If we had to manage them by hand it would take a lot of work. So we use programs to manage them. Rbenv, rubygems, and bundler are three programs that each manage a different aspect of this. They work together to create a whole.
+
+  # Who is this article written for?
+  who: Beginner and intermediate ruby devs
+
+  # What does it do for them?
+  what: >-
+    Shows them how these tools work under the hood.
+
+
+  # Why is that important?
+  why: >-
+    They seem like magic if you don't know how they work. So when they break it can be frustrating because how do you fix magic?
+
+
+  # Anything else marketing should know?
+  msc: >-
+    nope
+
+# This is the only text a reader is guaranteed to see. It is marketing text.
+# Use it to tell readers what this article is and why they should read it.
+# Keep it under 350 chars or so. It is displayed on the blog index page and
+# at the top of individual articles.
+short-description: >-
+  Rbenv, RubyGems, and Bundler work together to give us a lot of control over our code's environment. If you know how they work, you'll be better prepared to troubleshoot any problems you encounter.  In this article, Olasubomi walks us through the basics of how these three tools do what they do.
+
